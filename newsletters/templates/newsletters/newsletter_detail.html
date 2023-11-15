@@ -1,0 +1,52 @@
+{% extends 'newsletters/base.html' %}
+
+{% block content %}
+
+<div class="col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="fs-2 text-body-emphasis">{{ object.letter_subject }}</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table">
+                        <tr>
+                            <td>время рассылки</td>
+                            <td>{{ object.mailing_time }}</td>
+                        </tr>
+                        <tr>
+                            <td>периодичность</td>
+                            <td>{{ object.periodicity }}</td>
+                        </tr>
+                        <tr>
+                            <td>статус рассылки</td>
+                            <td>{{ object.mailing_status }}</td>
+                        </tr>
+                        <tr>
+                            <td>тема письма</td>
+                            <td>{{ object.letter_subject }}</td>
+                        </tr>
+                        <tr>
+                            <td>текст письма</td>
+                            <td>{{ object.letter_body|truncatechars:100 }}</td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+                <div class="card-footer">
+                    <a href="#" class="icon-link">
+                        Завершить
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'newsletters/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Создать клиента</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="" class="form-floating">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <input type="text" name="email" class="form-control" id="email" placeholder="Почта клиента" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fio">ФИО</label>
+                            <input type="text" name="fio" class="form-control" id="fio" placeholder="ФИО клиента" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment">Комментарий</label>
+                            <textarea type="text" name="comment" class="form-control" id="comment" placeholder="Комментарий" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Создать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

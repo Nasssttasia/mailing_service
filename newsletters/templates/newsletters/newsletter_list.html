@@ -1,0 +1,42 @@
+{% extends 'newsletters/base.html' %}
+
+{% block content %}
+
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'newsletters:create' %}">Создать рассылку</a>
+    <a class="btn btn-outline-primary" href="{% url 'newsletters:create_client' %}">Создать клиента</a>
+</div>
+
+{% for object in object_list %}
+<div class="col-3">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{ object.letter_subject }}</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{ object.mailing_time }}</h1>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>- {{ object.mailing_status }}</li>
+            </ul>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+
+                    <a href="{% url 'newsletters:newsletter' object.pk %}"
+                       class="btn btn-lg btn-block btn-outline-primary" >Посмотреть</a>
+
+
+                    <a href="{% url 'newsletters:edit' object.pk %}"
+                       class="btn btn-lg btn-block btn-outline-primary" >Изменить</a>
+
+                    <a href="{% url 'newsletters:logs' object.pk %}"
+                       class="btn btn-lg btn-block btn-outline-primary" >Статистика</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}
