@@ -3,7 +3,7 @@ import secrets
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 
 from config import settings
 from users.forms import UserRegisterForm, UserProfileForm, StyleFormMixin
@@ -69,8 +69,25 @@ class ProfileView(UpdateView):
         return self.request.user
 
     def get_form(self, form_class=None):
-        form = super.get_form(form_class)
+        form = super().get_form(form_class)
         newsletter_fields = [f for f in form.fields.keys()]
         for field in newsletter_fields:
             if self.request.user.has_perm(f'users.set_{field}'):
                 return form
+
+
+class UserListView(ListView):
+    model = User
+
+
+def block_user(request, pk):
+    user = User.objects.get(pk=pk)
+    user.is_active = not user.is_active
+    user.save()
+    return redirect('users:user_list')
+
+
+
+
+
+

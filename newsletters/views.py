@@ -7,11 +7,18 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from newsletters.forms import NewsletterForm
 from newsletters.models import Newsletter, NewsletterLogs, Client
 
+class OnlyForOwnerOrStaffMixin:
+    def get_object(self, queryset=None):
+        newsletter = super().get_object(queryset)
+        if newsletter.owner == self.request.user:
+            return newsletter
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return newsletter
 
-class NewsletterCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class NewsletterCreateView(LoginRequiredMixin, CreateView):
     model = Newsletter
     form_class = NewsletterForm
-    permission_required = 'newsletters.add_newsletter'
+
     success_url = reverse_lazy('newsletters:list')
 
     def form_valid(self, form):
@@ -21,17 +28,16 @@ class NewsletterCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVi
         return super().form_valid(form)
 
 
-class NewsletterUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class NewsletterUpdateView(LoginRequiredMixin, OnlyForOwnerOrStaffMixin, UpdateView):
     model = Newsletter
     form_class = NewsletterForm
-    permission_required = 'newsletters.change_newsletter'
     success_url = reverse_lazy('newsletters:list')
 
     #def get_success_url(self):
         #return reverse('catalog:product', args=[self.kwargs.get('pk')])
 
     def get_form(self, form_class=None):
-        form = super.get_form(form_class)
+        form = super().get_form(form_class)
         if self.object.owner != self.request.user:
             newsletter_fields = [f for f in form.fields.keys()]
             for field in newsletter_fields:
@@ -40,22 +46,30 @@ class NewsletterUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVi
         return form
 
 
-class NewsletterListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+
+
+class NewsletterListView(LoginRequiredMixin, ListView):
     model = Newsletter
     permission_required = 'newsletters.list_newsletter'
 
-    def get_object(self, queryset=None):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(owner=self.request.user)
+        return queryset
+
+    """def get_object(self, queryset=None):
         newsletter = super().get_object(queryset)
         if newsletter.owner == self.request.user:
             return newsletter
         if self.request.user.has_perm('newsletters.list_newsletter'):
             return newsletter
-        raise PermissionDenied
+        raise PermissionDenied"""
 
 
-class NewsletterDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class NewsletterDetailView(LoginRequiredMixin, OnlyForOwnerOrStaffMixin, DetailView):
     model = Newsletter
-    permission_required = 'newsletters.view_newsletter'
+
 
 
 def logs(request, pk):
