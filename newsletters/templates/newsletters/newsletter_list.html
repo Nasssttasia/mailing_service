@@ -9,8 +9,37 @@
     <a class="btn btn-outline-primary" href="{% url 'newsletters:create_client' %}">Создать клиента</a>
 </div>
 
+
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card mg-5">
+
+                <div class="card-body">
+                    <table class="table table-striped auto__table text-left">
+                        <tr>
+                            <td>количество рассылок всего</td>
+                            <td>{{ object.date_time }}</td>
+                        </tr>
+                        <tr>
+                            <td>количество активных рассылок</td>
+                            <td>{{ object.status }}</td>
+                        </tr>
+                        <tr>
+                            <td>количество уникальных клиентов для рассылок</td>
+                            <td>{{ object.mail_server_response }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
 {% for object in object_list %}
-<div class="col-3">
+<div class="col-3 gy-5">
     <div class="card mb-4 box-shadow">
         <div class="card-header">
             <h4 class="my-0 font-weight-normal">{{ object.letter_subject }}</h4>
