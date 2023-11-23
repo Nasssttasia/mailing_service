@@ -76,9 +76,7 @@ def logs(request, pk):
     logs = NewsletterLogs.objects.filter(pk=pk).last()
     context = {
         'object': logs,
-        'date_time': 'дата и время последней попытки',
-        'status': 'статус попытки',
-        'mail_server_response': 'ответ почтового сервиса'
+
     }
     return render(request, 'newsletters/logs.html', context)
 

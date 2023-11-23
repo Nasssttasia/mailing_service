@@ -1,7 +1,9 @@
 {% extends 'newsletters/base.html' %}
 
 {% block content %}
-
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Статистика</h1>
+</div>
 <div class="col-12">
     <div class="row">
         <div class="col-6">
@@ -30,8 +32,8 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="#" class="icon-link">
-                        Завершить
+                    <a href="{% url 'newsletters:list' %}" class="icon-link">
+                        Назад
                     </a>
                 </div>
             </div>
