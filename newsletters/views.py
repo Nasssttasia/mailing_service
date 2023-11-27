@@ -6,6 +6,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from newsletters.forms import NewsletterForm
 from newsletters.models import Newsletter, NewsletterLogs, Client
+from users.models import User
+
 
 class OnlyForOwnerOrStaffMixin:
     def get_object(self, queryset=None):
@@ -58,6 +60,14 @@ class NewsletterListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(owner=self.request.user)
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['mailing_count'] = NewsletterLogs.objects.all().count()
+        context['enabled_mailing'] = NewsletterLogs.objects.all().filter(status=True).count()
+        context['unique_users'] = User.objects.all().distinct('email').count()
+
+        return context
+
     """def get_object(self, queryset=None):
         newsletter = super().get_object(queryset)
         if newsletter.owner == self.request.user:
@@ -71,14 +81,17 @@ class NewsletterDetailView(LoginRequiredMixin, OnlyForOwnerOrStaffMixin, DetailV
     model = Newsletter
 
 
-
-def logs(request, pk):
-    logs = NewsletterLogs.objects.filter(pk=pk).last()
-    context = {
-        'object': logs,
-
+class NewsletterLogsListView(LoginRequiredMixin, ListView):
+    model = NewsletterLogs
+    #queryset = NewsletterLogs.objects.filter().order_by('pk').reverse()
+    extra_context = {
+        'title': 'Логи'
     }
-    return render(request, 'newsletters/logs.html', context)
+
+    def get_queryset(self):
+        queryset = NewsletterLogs.objects.all()
+        print(queryset)
+        return queryset
 
 
 def create_client(request):

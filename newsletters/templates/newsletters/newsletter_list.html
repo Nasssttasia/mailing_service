@@ -19,15 +19,15 @@
                     <table class="table table-striped auto__table text-left">
                         <tr>
                             <td>количество рассылок всего</td>
-                            <td>{{ object.date_time }}</td>
+                            <td>{{ mailing_count }}</td>
                         </tr>
                         <tr>
                             <td>количество активных рассылок</td>
-                            <td>{{ object.status }}</td>
+                            <td>{{ enabled_mailing }}</td>
                         </tr>
                         <tr>
                             <td>количество уникальных клиентов для рассылок</td>
-                            <td>{{ object.mail_server_response }}</td>
+                            <td>{{ unique_users }}</td>
                         </tr>
                     </table>
                 </div>

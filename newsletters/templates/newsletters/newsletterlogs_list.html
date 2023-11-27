@@ -1,0 +1,53 @@
+{% extends 'newsletters/base.html' %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Статистика</h1>
+</div>
+<div class="col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="fs-2 text-body-emphasis">{{ object.logs }}</h3>
+                </div>
+
+                <div class="card-body">
+                    {% for object in object_list %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Попытка</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>дата и время попытки</td>
+                                <td>{{ object.mail_server_response }}</td>
+                            </tr>
+                            <tr>
+                                <td>статус попытки</td>
+                                <td>{{ object.status }}</td>
+                            </tr>
+                            <tr>
+                                <td>ответ почтового сервиса</td>
+                                <td>{{ object.mail_server_response }}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    {% endfor %}
+                </div>
+
+                <div class="card-footer">
+                    <a href="{% url 'newsletters:list' %}" class="icon-link">
+                        Назад
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

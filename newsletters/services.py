@@ -31,7 +31,9 @@ def check_newsletter():
 
 
         if main_status == 1:
-            NewsletterLogs.status = 'send'
+            NewsletterLogs.objects.create(
+                status=True,
+            )
 
 
         if newsletter.mailing_time == 'daily':
