@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
         scheduler.add_job(
           check_newsletter,
-          trigger=CronTrigger(second="*/60"),  # Every 60 seconds
+          trigger=CronTrigger(second="*/1"),  # Every 60 seconds
           id="check_newsletter_aptscheduler",  # The `id` assigned to each job MUST be unique
           max_instances=1,
           replace_existing=True,

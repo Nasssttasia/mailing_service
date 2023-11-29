@@ -36,11 +36,11 @@ def check_newsletter():
             )
 
 
-        if newsletter.mailing_time == 'daily':
+        if newsletter.periodicity == 'daily':
             newsletter.next_run += timedelta(days=1)
-        if newsletter.mailing_time == 'weekly':
+        if newsletter.periodicity == 'weekly':
             newsletter.next_run += timedelta(days=7)
-        if newsletter.mailing_time == 'monthly':
+        if newsletter.periodicity == 'monthly':
             newsletter.next_run += relativedelta(months=1)
 
 
