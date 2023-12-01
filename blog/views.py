@@ -11,8 +11,7 @@ class BlogListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
-        queryset = random.sample(list(queryset), min(3, len(queryset)))
+        queryset = queryset.filter(is_published=True).order_by('?')[:3]
         return queryset
 
 
