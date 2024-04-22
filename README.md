@@ -24,7 +24,6 @@
 Активируйте виртуальное окружение venv\Scripts\activate
 Установите зависимости проекта, указанные в файле requirements.txt pip install -r requirements.txt
 Установите redis глобально себе на компьютер, используйте wsl.
-Создайте файл .env. Введите туда свои настройки как указано в файле .env.sample:
 В командной строке Windows запускайте сервис: python manage.py runserver
 
 
